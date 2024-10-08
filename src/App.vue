@@ -31,15 +31,15 @@ getWeather();
       <div class="container">
         <div class="laptop">
           <div class="sections">
-            <section :class="['section', 'section - left', { 'section-error': isError }]">
+            <section :class="['section', 'section-left', { 'section-error': isError }]">
               <div class="info">
                 <div class="city-inner">
                   <input v-model="city" type="text" class="search" @keyup.enter="getWeather" />
-                  <i class="city-inner__icon" @click="getWeather" />
+                  <i class="city-inner-icon" @click="getWeather" />
                 </div>
+
                 <WeatherSummary v-if="!isError" :weatherInfo="weatherInfo" />
-                <div class="error">
-                  <p class="error-title">Oooops! Something went wrong</p>
+                <div class="error" v-else>
                   <p v-if="weatherInfo?.message" class="error-message">
                     {{ capitalizeFirstLetter(weatherInfo?.message) }}
                   </p>
@@ -47,7 +47,7 @@ getWeather();
               </div>
             </section>
 
-            <section v-if="!isError" class="section__right">
+            <section v-if="!isError" class="section-right">
               <HighLights :weatherInfo="weatherInfo" />
             </section>
           </div>
@@ -93,7 +93,7 @@ getWeather();
 }
 
 .section {
-  &__left {
+  &-left {
     width: 30%;
     padding-right: 10px;
 
@@ -103,7 +103,7 @@ getWeather();
     }
   }
 
-  &__right {
+  &-right {
     width: 70%;
     padding-left: 10px;
 
@@ -114,13 +114,18 @@ getWeather();
     }
   }
 
-  &__bottom {
+  &-bottom {
     width: 50%;
     margin-top: 16px;
 
     @media (max-width: 767px) {
       width: 100%;
     }
+  }
+
+  &-error {
+    width: 100%;
+    padding: 0;
   }
 }
 
@@ -129,7 +134,7 @@ getWeather();
   display: inline-block;
   width: 100%;
 
-  &__icon {
+  &-icon {
     position: absolute;
     top: 0;
     right: 10px;
@@ -160,5 +165,13 @@ getWeather();
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+.error {
+  margin-top: 16px;
+
+  &-message {
+    color: red;
+  }
 }
 </style>
